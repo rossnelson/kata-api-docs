@@ -1,13 +1,10 @@
 ---
-title: API Reference
+title: Kata API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -18,151 +15,122 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Kata API! You can use our API to access User and Organization API
+endpoints, which can get information on various users, organizations and thier
+access levels in our database.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have Shell examples using curl. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+This API documentation page was created with [Slate](http://github.com/tripit/slate).
 
-# Authentication
+# Organizations
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-```
+## Get All Organizations
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl -i \
+  -H "Content-Type: application/json" \
+  "http://kata.simian.us/orgs"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "orgs":
+  [
+    {
+      "id":2,
+      "name":"Schumm-Bahringer",
+      "created_at":"2014-11-29T03:02:41.734Z",
+      "updated_at":"2014-11-29T03:02:41.734Z",
+      "parent_id":null
+    },
+    {
+      "id":3,
+      "name":"Moen-Padberg",
+      "created_at":"2014-11-29T03:02:41.735Z",
+      "updated_at":"2014-11-29T03:02:41.735Z",
+      "parent_id":2
+    }
+  ]
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+This endpoint retrieves all organizations.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET http://kata.simian.us/orgs`
+
+# Users
+
+## Get All Users
+
+```shell
+curl -i \
+  -H "Content-Type: application/json" \
+  "http://kata.simian.us/users"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "users":
+  [
+    {
+      "id":1,
+      "email":"axcess1@me.com",
+      "created_at":"2014-11-27T20:21:43.663Z",
+      "updated_at":"2014-11-27T20:21:43.663Z"
+    },
+    {
+      "id":2,
+      "email":"camille.heel@vonrueden.info",
+      "created_at":"2014-11-29T04:14:25.838Z",
+      "updated_at":"2014-11-29T04:14:25.838Z"
+    }
+
+  ]
+}
+```
+
+This endpoint retrieves all users.
+
+### HTTP Request
+
+`GET http://kata.simian.us/users`
+
+## Get a Specific User
+
+```shell
+curl -i \
+  -H "Content-Type: application/json" \
+  "http://kata.simian.us/users/3"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+"user": 
+  {
+    "id":1, 
+    "email":"elwin.gerhold@leannonkling.name"
+  }
+}
+```
+
+This endpoint retrieves a specific user.
+
+### HTTP Request
+
+`GET http://kata.simian.us/users/<ID>`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+ID | The ID of the user to retrieve
 
